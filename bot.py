@@ -36,4 +36,6 @@ async def ping(inter):         # async def — это специальный в�
 
 
 
+
+
 bot.run('MTU1NjY0NTY2MTg5MjU0MjQ4NA.GeaTCo.Cv0cs-P4Q71DRtR8KIRmDUthEure47RudaEIXA')   # отвечает за запуск бота 
