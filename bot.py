@@ -1,20 +1,31 @@
-import disnake                       # импорт Discord-API (disnake)
+import disnake                      # импорт Discord-API (disnake)
 from disnake.ext import commands  # обращается к disnake для использования метода commands 
 
 intents = disnake.Intents.default()   # создает переменную и стандартные значения для получения событий Discord 
 intents.members=True
 intents.message_content=True           # Разрешает боту получать информацию об участниках и содержимое сообщений.
 
-
 bot = commands.Bot(               # инициализация объекта бота. (создает экземпляр бота)
     command_prefix="!",         #  Cимвол, с которого должны начинаться команды для этого бота (например, !help).
     intents=intents               # передача прав доступа и разрешений (намерений) для отслеживания событий (например, сообщений или участников)
 )
 
+
+
+
+
+
 # декоратор bot.event, который обращается к функции on_ready, и выдает сообщение о запуске бота 
 @bot.event
 async def on_ready():
     print(f'Бот запущен {bot.user}')       # выводит текст в терминал о том, что запуск бота успешно произведен 
+
+
+
+
+
+
+
 
 
 @bot.slash_command(name='ping', description='узнать вашу задержку')  # декоратор bot.slash_command, превращает код в slash команду дискорда 
@@ -32,6 +43,40 @@ async def ping(inter):         # async def — это специальный в�
 # Например, через inter мы можем получить информацию о пользователе, сервере и самой команде.
 # send_message = Говорим Discord:
 # «Отправь сообщение».
+
+
+
+
+
+
+
+answers = {                                                       # * список вопрос-ответ
+"привет": "👋 Привет! Рад тебя видеть!",
+"кто ты?": "🤖 Я Discord-бот, написанный на Python!",
+"как дела?": "😎 Отлично! Спасибо, что спросил!",
+"что ты умеешь?": "🛠️ Пока учусь, но скоро буду уметь гораздо больше!",
+"спасибо": "😊 Пожалуйста!"
+}
+
+
+@bot.event                                 # ! дикоратор позволяет работать дискорду с сообщениями 
+async def on_message(message):
+   if message.author == bot.user:     
+       return
+   
+   text = message.content.lower()           # ! получили текст сообщения и сохранили его в text c поддержкой нижнего регистра.
+   
+   if text in answers:                                    # ! in проверяет:
+    await message.channel.send(answers[text])             # ! Есть ли такой ключ в словаре answers?
+    
+    await bot.process_commands(message)
+
+
+
+
+
+
+
 
 
 
